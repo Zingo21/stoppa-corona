@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alstromergymnasiet.stoppacorona.R;
-import com.alstromergymnasiet.stoppacorona.ui.country.CovidCountry;
 import com.alstromergymnasiet.stoppacorona.ui.country.CovidCountryDetail;
 import com.alstromergymnasiet.stoppacorona.ui.country.ItemClickSupport;
 import com.android.volley.Request;
@@ -45,12 +44,18 @@ import java.util.List;
 // TO-DO grejer:
 
 // TODO Försöka implementera Python Covid API i denna Java class fil
+// TODO Komma på en lösning som gör att informationen om flagga, land, fall, ändring i procent och ändring i pilar visas när man kör appen.
 
 public class StatisticsFragment extends Fragment {
 
     ProgressBar progressBar;                                                // Lägger till Progress bar
     RecyclerView rvCovidStatistics;                                         // Lägger till vyn
     TextView tvCovidStatistics;                                             // Lägger till Text View
+    TextView tvCovidInfoFlag;
+    TextView tvCovidInfoCountry;
+    TextView tvCovidInfoCases;
+    TextView tvCovidInfoPercent;
+    TextView tvCovidInfoArrow;
     Drawable dpArrowUp, dpArrowDown, dpArrowSide;                           // Lägger till pilar som ska visa hur coronan utvecklar sig. Troligtvis kommer detta till användning, får bara försöka komma på koden till dessa så att man kan använda de.
     CovidStatisticsCountryAdapter covidStatisticsCountryAdapter;            // Lägger till en adapter som hämtar data från nätet via JSON
 
@@ -67,8 +72,12 @@ public class StatisticsFragment extends Fragment {
         rvCovidStatistics = root.findViewById(R.id.rvCovidCountryStatistics);
         progressBar = root.findViewById(R.id.progress_circular_statistics);
         rvCovidStatistics.setLayoutManager(new LinearLayoutManager(getActivity()));
-        tvCovidStatistics = root.findViewById(R.id.tvTotalCountriesStatistics); // Används ej just nu!
-        Object linearLayoutInfo = root.findViewById(R.id.linearLayoutInfoStatistics); // Försöker implementera denna vy
+       // tvCovidStatistics = root.findViewById(R.id.tvTotalCountriesStatistics); // Används ej just nu!
+        tvCovidInfoFlag = root.findViewById(R.id.textViewFlag);                   // Försöker implementera denna vy
+        tvCovidInfoCountry = root.findViewById(R.id.textViewCountry);             //Denna också
+        tvCovidInfoCases = root.findViewById(R.id.textViewCases);                 // Denna också
+        tvCovidInfoPercent = root.findViewById(R.id.tvChangeInPercent);           // Denna också
+        tvCovidInfoArrow = root.findViewById(R.id.tvChangeInArrows);              // Denna också
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvCovidStatistics.getContext(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.line_divider));
