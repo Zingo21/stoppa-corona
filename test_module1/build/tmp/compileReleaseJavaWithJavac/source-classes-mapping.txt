@@ -1,0 +1,2 @@
+com/alstromergymnasiet/test_module1/BuildConfig.java
+ com.alstromergymnasiet.test_module1.BuildConfig

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:padding="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+
+  <!--  <LinearLayout
+        android:id="@+id/CovidInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            tools:text="Flag" />
+
+        <TextView
+            android:id="@+id/textViewCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            tools:text="Country" />
+
+        <TextView
+            android:id="@+id/textViewCases"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            tools:text="Cases" />
+
+        <TextView
+            android:id="@+id/tvChangeInPercent"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            tools:text="Change in (%)" />
+
+        <TextView
+            android:id="@+id/tvChangeInArrows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            tools:text="Change in (->)" />
+
+    </LinearLayout> -->
+
+    <LinearLayout
+        android:id="@+id/linearLayoutCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <!-- android:layout_below="@id/CovidInfo" -->
+       <!-- android:paddingTop="15dp"> -->
+
+        <ImageView
+            android:id="@+id/imgCountryFlag"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/us" />
+
+        <TextView
+            android:id="@+id/tvCountryName"
+            style="@style/LabelFontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            tools:text="China" />
+
+        <TextView
+            android:id="@+id/tvTotalCases"
+            style="@style/LabelFontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorConfirmed"
+            android:textSize="20sp"
+            tools:text="82343" />
+
+
+        <TextView
+            android:id="@+id/tvCountryPercent"
+            style="@style/LabelFontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            tools:text="122%" />
+
+        <ImageView
+            android:id="@+id/drawArrowUp"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="55dp"
+            android:rotation="-45"
+            android:src="@drawable/ic_arrow_straight_upward_24" />
+
+        <ImageView
+            android:id="@+id/drawArrowStraight"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="-50dp"
+            android:src="@drawable/ic_arrow_slow_upward_24" />
+
+        <ImageView
+            android:id="@+id/drawArrowDown"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="-50dp"
+            android:rotation="45"
+            android:src="@drawable/ic_arrow_downward_24" />
+
+    </LinearLayout>
+
+
+    <!-- Start av gammal kod - Start of old code
+    <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal">
+
+         <ImageView
+             android:id="@+id/imgCountryFlag"
+             android:layout_width="48dp"
+             android:layout_height="32dp"
+             android:layout_gravity="center_vertical"
+             android:src="@drawable/us" />
+
+         <TextView
+             android:id="@+id/tvTotalCases"
+             style="@style/LabelFontStyle"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="8dp"
+             android:textColor="@color/colorConfirmed"
+             android:textSize="20sp"
+             tools:text="82343" />
+
+         <TextView
+             android:id="@+id/tvCountryName"
+             style="@style/LabelFontStyle"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="8dp"
+             android:textColor="#ffff"
+             android:textSize="20sp"
+             tools:text="China" />
+
+         <ImageView
+             android:id="@+id/drawArrowUp"
+             android:layout_width="48dp"
+             android:layout_height="32dp"
+             android:layout_gravity="center_vertical"
+             android:layout_marginStart="125dp"
+             android:rotation="-45"
+             android:src="@drawable/ic_arrow_straight_upward_24" />
+
+         <ImageView
+             android:id="@+id/drawArrowStraight"
+             android:layout_width="48dp"
+             android:layout_height="32dp"
+             android:layout_gravity="center_vertical"
+             android:layout_marginStart="-50dp"
+             android:src="@drawable/ic_arrow_slow_upward_24" />
+
+         <ImageView
+             android:id="@+id/drawArrowDown"
+             android:layout_width="48dp"
+             android:layout_height="32dp"
+             android:layout_gravity="center_vertical"
+             android:layout_marginStart="-50dp"
+             android:rotation="45"
+             android:src="@drawable/ic_arrow_downward_24" />
+     </LinearLayout> --> <!-- Gammal kod -->
+</RelativeLayout>
