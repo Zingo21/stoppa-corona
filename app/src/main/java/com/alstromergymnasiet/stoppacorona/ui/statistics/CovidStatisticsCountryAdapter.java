@@ -58,6 +58,8 @@ public class CovidStatisticsCountryAdapter extends RecyclerView.Adapter<CovidSta
 
     }
 
+    // TODO Ändra koden så att det visar något annar när man kör appen
+
     @Override
     public int getItemCount() {
         return covidStatisticsCountries.size();
