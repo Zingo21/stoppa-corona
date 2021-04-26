@@ -45,6 +45,7 @@ import java.util.List;
 
 // TODO Försöka implementera Python Covid API i denna Java class fil
 // TODO Komma på en lösning som gör att informationen om flagga, land, fall, ändring i procent och ändring i pilar visas när man kör appen.
+// TODO Jag kommenterar bort all kod som finns nere som liknar covidCoutry, jag tror att detta kan vara lösningen om jag skapar nya rader kod.
 
 public class StatisticsFragment extends Fragment {
 
