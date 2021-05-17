@@ -1,6 +1,5 @@
 package com.alstromergymnasiet.stoppacorona.ui.statistics;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alstromergymnasiet.stoppacorona.R;
-import com.alstromergymnasiet.stoppacorona.ui.country.ItemClickSupport;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -35,7 +33,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -53,7 +50,7 @@ public class StatisticsFragment2 extends Fragment {
     CovidStatisticsCountryAdapter covidStatisticsCountryAdapter;
 
     private static final String TAG = StatisticsFragment2.class.getSimpleName();
-    List<CovidStatisticsCountry> covidStatisticsCountries;
+    List<CovidCountryStatistics> covidStatisticsCountries;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -115,7 +112,7 @@ public class StatisticsFragment2 extends Fragment {
 
                             JSONObject countryInfo = data.getJSONObject("countryInfo");
 
-                            covidStatisticsCountries.add(new CovidStatisticsCountry(data.getString("country"), data.getInt("cases"),
+                            covidStatisticsCountries.add(new CovidCountryStatistics(data.getString("country"), data.getInt("cases"),
                                     data.getString("todayCases"), data.getString("deaths"),
                                     data.getString("todayDeaths"), data.getString("recovered"),
                                     data.getString("active"), data.getString("critical"),
@@ -123,10 +120,10 @@ public class StatisticsFragment2 extends Fragment {
                             ));
                         }
 
-                        Collections.sort(covidStatisticsCountries, new Comparator<CovidStatisticsCountry>() {
+                        Collections.sort(covidStatisticsCountries, new Comparator<CovidCountryStatistics>() {
 
                             @Override
-                            public int compare(CovidStatisticsCountry o1, CovidStatisticsCountry o2) {
+                            public int compare(CovidCountryStatistics o1, CovidCountryStatistics o2) {
                                 if (o1.getmTodayCases()> o2.getmTodayCases()){
                                     return -1;
                                 }else{
@@ -172,7 +169,7 @@ public class StatisticsFragment2 extends Fragment {
                             // Extrahera JSONObject inom ett JSONObject
                             JSONObject countryInfo = data.getJSONObject("countryInfo");
 
-                            covidStatisticsCountries.add(new CovidStatisticsCountry(data.getString("country"), data.getInt("cases"),
+                            covidStatisticsCountries.add(new CovidCountryStatistics(data.getString("country"), data.getInt("cases"),
                                     data.getString("todayCases"), data.getString("deaths"),
                                     data.getString("todayDeaths"), data.getString("recovered"),
                                     data.getString("active"), data.getString("critical"),

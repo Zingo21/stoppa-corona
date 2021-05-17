@@ -1,7 +1,6 @@
 package com.alstromergymnasiet.stoppacorona.ui.statistics;
 
 // Importerar funktioner:
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,8 +23,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alstromergymnasiet.stoppacorona.R;
-import com.alstromergymnasiet.stoppacorona.ui.country.CovidCountryDetail;
-import com.alstromergymnasiet.stoppacorona.ui.country.ItemClickSupport;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -49,45 +46,40 @@ import java.util.List;
 
 public class StatisticsFragment extends Fragment {
 
-    ProgressBar progressBar;                                                // Lägger till Progress bar
-    RecyclerView rvCovidStatistics;                                         // Lägger till vyn
-    TextView tvCovidStatistics;                                             // Lägger till Text View
-    TextView tvCovidInfoFlag;                                               // Lägger till Text View
-    TextView tvCovidInfoCountry;                                            // Lägger till Text View
-    TextView tvCovidInfoCases;                                              // Lägger till Text View
-    TextView tvCovidInfoPercent;                                            // Lägger till Text View
-    TextView tvCovidInfoArrow;                                              // Lägger till Text View
-    Drawable dpArrowUp, dpArrowDown, dpArrowSide;                           // Lägger till pilar som ska visa hur coronan utvecklar sig. Troligtvis kommer detta till användning, får bara försöka komma på koden till dessa så att man kan använda de.
-    CovidStatisticsCountryAdapter covidStatisticsCountryAdapter;            // Lägger till en adapter som hämtar data från nätet via JSON
+    ProgressBar progressBar;
+    RecyclerView rvCovidStatistics;
+    TextView tvCovidInfoFlag;
+    TextView tvCovidInfoCountry;
+    TextView tvCovidInfoCases;
+    TextView tvCovidInfoPercent;
+    TextView tvCovidInfoArrow;
+    Drawable dpArrowUp, dpArrowDown, dpArrowSide;
+    CovidStatisticsCountryAdapter covidStatisticsCountryAdapter;
 
     private static final String TAG = StatisticsFragment.class.getSimpleName();
-    List<CovidStatisticsCountry> covidCountriesStatistics;
+    List<CovidCountryStatistics> covidCountriesStatistics;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.fragment_statistics, container, false);
 
         setHasOptionsMenu(true);
 
-        // Kallar på vy
         rvCovidStatistics = root.findViewById(R.id.rvCovidCountryStatistics);
         progressBar = root.findViewById(R.id.progress_circular_statistics);
         rvCovidStatistics.setLayoutManager(new LinearLayoutManager(getActivity()));
-        // tvCovidStatistics = root.findViewById(R.id.tvTotalCountriesStatistics); // Används ej just nu!
-        tvCovidInfoFlag = root.findViewById(R.id.textViewFlag);                   // Försöker implementera denna vy
-        tvCovidInfoCountry = root.findViewById(R.id.textViewCountry);             //Denna också
-        tvCovidInfoCases = root.findViewById(R.id.textViewCases);                 // Denna också
-        tvCovidInfoPercent = root.findViewById(R.id.tvChangeInPercent);           // Denna också
-        tvCovidInfoArrow = root.findViewById(R.id.tvChangeInArrows);              // Denna också
+        tvCovidInfoFlag = root.findViewById(R.id.textViewFlag);
+        tvCovidInfoCountry = root.findViewById(R.id.textViewCountry);
+        tvCovidInfoCases = root.findViewById(R.id.textViewCases);
+        tvCovidInfoPercent = root.findViewById(R.id.tvChangeInPercent);
+        tvCovidInfoArrow = root.findViewById(R.id.tvChangeInArrows);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvCovidStatistics.getContext(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.line_divider));
         rvCovidStatistics.addItemDecoration(dividerItemDecoration);
 
-        // Kallar på lista
         covidCountriesStatistics = new ArrayList<>();
 
-        // Kallar på volley metoden
         getDataFromServerSortTotalCases();
 
         return root;
@@ -97,39 +89,37 @@ public class StatisticsFragment extends Fragment {
         covidStatisticsCountryAdapter = new CovidStatisticsCountryAdapter(covidCountriesStatistics, getActivity());
         rvCovidStatistics.setAdapter(covidStatisticsCountryAdapter);
 
-        ItemClickSupport.addTo(rvCovidStatistics).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                showSelectedCovidCountry(covidCountriesStatistics.get(position));
-            }
-        });
+        // ItemClickSupport.addTo(rvCovidStatistics).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+        // @Override
+        // public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+        //   showSelectedCountry(covidStatisticsCountries.get(position));
+        // }
+        //});
     }
 
-    private void showSelectedCovidCountry(CovidStatisticsCountry covidCountry){
-        Intent covidCovidCountryDetail = new Intent(getActivity(), CovidCountryDetail.class);
-        covidCovidCountryDetail.putExtra("EXTRA_COVID", covidCountry);
-        startActivity(covidCovidCountryDetail);
-    }
+    // Raden nedan Kommer inte att behövas då det ändå bara kommer visas andra länder med statistik
+    // TODO Ta bort raden nedanför
+    // private void showSelectedCountry(CovidStatisticsCountry covidStatisticsCountry) {
+    //    Intent covidCovidCountryStatisticsDtail = new Intent(getActivity(), Covi)
+    // }
 
     private void getDataFromServerSortTotalCases() {
         String url = "https://disease.sh/v3/covid-19/countries";
-        
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 progressBar.setVisibility(View.GONE);
-                if (response != null) {
+                if (response !=null){
                     Log.e(TAG, "onResponse: " + response);
                     try {
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject data = jsonArray.getJSONObject(i);
 
-                            // Extrahera JSONObject inom ett JSONObject
                             JSONObject countryInfo = data.getJSONObject("countryInfo");
 
-                            covidCountriesStatistics.add(new CovidStatisticsCountry(data.getString("country"), data.getInt("cases"),
+                            covidCountriesStatistics.add(new CovidCountryStatistics(data.getString("country"), data.getInt("cases"),
                                     data.getString("todayCases"), data.getString("deaths"),
                                     data.getString("todayDeaths"), data.getString("recovered"),
                                     data.getString("active"), data.getString("critical"),
@@ -137,14 +127,13 @@ public class StatisticsFragment extends Fragment {
                             ));
                         }
 
-                        //Sorteras fallande
-                        Collections.sort(covidCountriesStatistics, new Comparator<CovidStatisticsCountry>() {
+                        Collections.sort(covidCountriesStatistics, new Comparator<CovidCountryStatistics>() {
 
                             @Override
-                            public int compare(CovidStatisticsCountry o1, CovidStatisticsCountry o2) {
-                                if (o1.getmTodayCases()>o2.getmTodayCases()){
+                            public int compare(CovidCountryStatistics o1, CovidCountryStatistics o2) {
+                                if (o1.getmTodayCases()> o2.getmTodayCases()){
                                     return -1;
-                                }else {
+                                }else{
                                     return 1;
                                 }
                             }
@@ -187,7 +176,7 @@ public class StatisticsFragment extends Fragment {
                             // Extrahera JSONObject inom ett JSONObject
                             JSONObject countryInfo = data.getJSONObject("countryInfo");
 
-                            covidCountriesStatistics.add(new CovidStatisticsCountry(data.getString("country"), data.getInt("cases"),
+                            covidCountriesStatistics.add(new CovidCountryStatistics(data.getString("country"), data.getInt("cases"),
                                     data.getString("todayCases"), data.getString("deaths"),
                                     data.getString("todayDeaths"), data.getString("recovered"),
                                     data.getString("active"), data.getString("critical"),
@@ -195,9 +184,7 @@ public class StatisticsFragment extends Fragment {
                             ));
                         }
 
-
-                        // Action Bar Title
-                        getActivity().setTitle(jsonArray.length()+" countries");
+                        getActivity().setTitle(jsonArray.length() + " countries");
 
                         showRecyclerView();
                     } catch (JSONException e) {
@@ -214,6 +201,7 @@ public class StatisticsFragment extends Fragment {
                     }
                 });
         Volley.newRequestQueue(getActivity()).add(stringRequest);
+
     }
 
     @Override

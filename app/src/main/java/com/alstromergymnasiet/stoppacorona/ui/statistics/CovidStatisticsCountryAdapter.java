@@ -21,11 +21,11 @@ import java.util.List;
 
 public class CovidStatisticsCountryAdapter extends RecyclerView.Adapter<CovidStatisticsCountryAdapter.ViewHolder> implements Filterable {
 
-    private List<CovidStatisticsCountry> covidStatisticsCountries;
-    private List<CovidStatisticsCountry> covidStatisticsCountriesFull;
+    private List<CovidCountryStatistics> covidStatisticsCountries;
+    private List<CovidCountryStatistics> covidStatisticsCountriesFull;
     private Context context;
 
-    public CovidStatisticsCountryAdapter(List<CovidStatisticsCountry> covidStatisticsCountries, Context context) {
+    public CovidStatisticsCountryAdapter(List<CovidCountryStatistics> covidStatisticsCountries, Context context) {
         this.covidStatisticsCountries = covidStatisticsCountries;
         this.context = context;
         covidStatisticsCountriesFull = new ArrayList<>(covidStatisticsCountries);
@@ -45,13 +45,13 @@ public class CovidStatisticsCountryAdapter extends RecyclerView.Adapter<CovidSta
 
     @Override
     public void onBindViewHolder(@NonNull CovidStatisticsCountryAdapter.ViewHolder holder, int position) {
-        CovidStatisticsCountry covidStatisticsCountry = covidStatisticsCountries.get(position);
-        holder.tvTotalCases.setText(Integer.toString(covidStatisticsCountry.getmTodayCases()));
-        holder.tvCountryName.setText(covidStatisticsCountry.getmCovidCountry());
+        CovidCountryStatistics covidCountryStatistics = covidStatisticsCountries.get(position);
+        holder.tvTotalCases.setText(Integer.toString(covidCountryStatistics.getmTodayCases()));
+        holder.tvCountryName.setText(covidCountryStatistics.getmCovidCountry());
 
         // Glide
         Glide.with(context)
-                .load(covidStatisticsCountry.getmFlags())
+                .load(covidCountryStatistics.getmFlags())
                 .apply(new RequestOptions().override(240, 160))
                 .into(holder.imgCountryFlag);
 
@@ -85,21 +85,21 @@ public class CovidStatisticsCountryAdapter extends RecyclerView.Adapter<CovidSta
     private Filter covidStatisticsCountriesFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<CovidStatisticsCountry> filteredCovidStatisticsCountry = new ArrayList<>();
+            List<CovidCountryStatistics> filteredCovidCountryStatistics = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
-                filteredCovidStatisticsCountry.addAll(covidStatisticsCountriesFull);
+                filteredCovidCountryStatistics.addAll(covidStatisticsCountriesFull);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (CovidStatisticsCountry itemCovidStatisticsCountry : covidStatisticsCountriesFull) {
-                    if (itemCovidStatisticsCountry.getmCovidCountry().toLowerCase().contains(filterPattern)) {
-                        filteredCovidStatisticsCountry.add(itemCovidStatisticsCountry);
+                for (CovidCountryStatistics itemCovidCountryStatistics : covidStatisticsCountriesFull) {
+                    if (itemCovidCountryStatistics.getmCovidCountry().toLowerCase().contains(filterPattern)) {
+                        filteredCovidCountryStatistics.add(itemCovidCountryStatistics);
                     }
                 }
             }
 
             FilterResults results = new FilterResults();
-            results.values = filteredCovidStatisticsCountry;
+            results.values = filteredCovidCountryStatistics;
             return results;
         }
 
