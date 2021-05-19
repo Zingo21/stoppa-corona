@@ -259,7 +259,6 @@
             android:backgroundTint="#554E4E"
             android:text="Add to Statistics" />
 
-
     </LinearLayout>
 
 </RelativeLayout>
