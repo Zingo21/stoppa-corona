@@ -1,6 +1,7 @@
 package com.alstromergymnasiet.stoppacorona.ui.statistics;
 
 // Importerar funktioner:
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
