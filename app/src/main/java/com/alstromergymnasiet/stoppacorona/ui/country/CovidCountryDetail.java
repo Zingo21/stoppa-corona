@@ -7,8 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.alstromergymnasiet.stoppacorona.CovidList;
 import com.alstromergymnasiet.stoppacorona.R;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
 
 public class CovidCountryDetail extends AppCompatActivity {
 
@@ -57,7 +60,7 @@ public class CovidCountryDetail extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Snackbar.make(v,"This country has been added to the statistics page", Snackbar.LENGTH_LONG) // Denna köd gör så att efter att man har tryckt på knappen så kommer meddelandet att visas upp på den nedersta delen av skärmen
-                        .setAction("Action",null).show(); // Samma sak gäller här
+                        .setAction("Action", (View.OnClickListener) new ArrayList<CovidList>()); // Samma sak gäller här
                 // Code here executes on main thread after user presses button
             }
         });

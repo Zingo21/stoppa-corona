@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alstromergymnasiet.stoppacorona.CovidList;
 import com.alstromergymnasiet.stoppacorona.R;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -58,7 +59,9 @@ public class StatisticsFragment extends Fragment {
     CovidStatisticsCountryAdapter covidStatisticsCountryAdapter;
 
     private static final String TAG = StatisticsFragment.class.getSimpleName();
-    List<CovidCountryStatistics> covidCountriesStatistics;
+    // List<CovidCountryStatistics> covidCountriesStatistics;
+    List<CovidList> covidCountriesStatistics;
+    String text = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -79,15 +82,32 @@ public class StatisticsFragment extends Fragment {
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.line_divider));
         rvCovidStatistics.addItemDecoration(dividerItemDecoration);
 
+        // Lista länder
         covidCountriesStatistics = new ArrayList<>();
+        covidCountriesStatistics.add(new CovidList("Country"));
+
+        // Visa listan
+        for(CovidList i : covidCountriesStatistics){
+            text = text + i.getCountry();
+        }
+
+        tvCovidInfoCountry.setText(text);
 
         getDataFromServerSortTotalCases();
 
         return root;
     }
 
+    private class CustomComparator implements Comparator<CovidList>{
+
+        @Override
+        public int compare(CovidList o1, CovidList o2) {
+            return o1.getCountry().compareTo(o2.getCountry());
+        }
+    }
+
     private void showRecyclerView(){
-        covidStatisticsCountryAdapter = new CovidStatisticsCountryAdapter(covidCountriesStatistics, getActivity());
+       // covidStatisticsCountryAdapter = new CovidStatisticsCountryAdapter(covidCountriesStatistics, getActivity());
         rvCovidStatistics.setAdapter(covidStatisticsCountryAdapter);
 
         // ItemClickSupport.addTo(rvCovidStatistics).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
@@ -120,25 +140,25 @@ public class StatisticsFragment extends Fragment {
 
                             JSONObject countryInfo = data.getJSONObject("countryInfo");
 
-                            covidCountriesStatistics.add(new CovidCountryStatistics(data.getString("country"), data.getInt("cases"),
-                                    data.getString("todayCases"), data.getString("deaths"),
-                                    data.getString("todayDeaths"), data.getString("recovered"),
-                                    data.getString("active"), data.getString("critical"),
-                                    countryInfo.getString("flag")
-                            ));
+                            // covidCountriesStatistics.add(new CovidCountryStatistics(data.getString("country"), data.getInt("cases"),
+                               //     data.getString("todayCases"), data.getString("deaths"),
+                                 //   data.getString("todayDeaths"), data.getString("recovered"),
+                                   // data.getString("active"), data.getString("critical"),
+                            //        countryInfo.getString("flag")
+                            // ));
                         }
 
-                        Collections.sort(covidCountriesStatistics, new Comparator<CovidCountryStatistics>() {
+                       // Collections.sort(covidCountriesStatistics, new Comparator<CovidCountryStatistics>() {
 
-                            @Override
-                            public int compare(CovidCountryStatistics o1, CovidCountryStatistics o2) {
-                                if (o1.getmTodayCases()> o2.getmTodayCases()){
-                                    return -1;
-                                }else{
-                                    return 1;
-                                }
-                            }
-                        });
+                         //   @Override
+                           // public int compare(CovidCountryStatistics o1, CovidCountryStatistics o2) {
+                             //   if (o1.getmTodayCases()> o2.getmTodayCases()){
+                               //     return -1;
+                               // }else{
+                                 //   return 1;
+                               // }
+                           // }
+                        // });
 
                         // Action Bar Title
                         getActivity().setTitle(jsonArray.length()+" countries");
@@ -177,12 +197,12 @@ public class StatisticsFragment extends Fragment {
                             // Extrahera JSONObject inom ett JSONObject
                             JSONObject countryInfo = data.getJSONObject("countryInfo");
 
-                            covidCountriesStatistics.add(new CovidCountryStatistics(data.getString("country"), data.getInt("cases"),
-                                    data.getString("todayCases"), data.getString("deaths"),
-                                    data.getString("todayDeaths"), data.getString("recovered"),
-                                    data.getString("active"), data.getString("critical"),
-                                    countryInfo.getString("flag")
-                            ));
+                            // covidCountriesStatistics.add(new CovidCountryStatistics(data.getString("country"), data.getInt("cases"),
+                               //     data.getString("todayCases"), data.getString("deaths"),
+                                 //   data.getString("todayDeaths"), data.getString("recovered"),
+                                  //  data.getString("active"), data.getString("critical"),
+                                    // countryInfo.getString("flag")
+                            // ));
                         }
 
                         getActivity().setTitle(jsonArray.length() + " countries");
