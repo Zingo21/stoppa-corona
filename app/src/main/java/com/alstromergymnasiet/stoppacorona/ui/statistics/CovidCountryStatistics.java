@@ -7,18 +7,18 @@ import androidx.fragment.app.FragmentActivity;
 
 import java.util.List;
 
-public class CovidStatisticsCountry  implements Parcelable {
+public class CovidCountryStatistics implements Parcelable {
     String mCovidCountry, mTotalCases, mFlags;
     int mTodayCases;
 
-    public CovidStatisticsCountry(String mCovidCountry, int mTodayCases, String todayCases, String deaths, String todayDeaths, String recovered, String active, String mTotalCases, String mFlags){
+    public CovidCountryStatistics(String mCovidCountry, int mTodayCases, String todayCases, String deaths, String todayDeaths, String recovered, String active, String mTotalCases, String mFlags){
         this.mCovidCountry = mCovidCountry;
         this.mTodayCases = mTodayCases;
         this.mTotalCases = mTotalCases;
         this.mFlags = mFlags;
     }
 
-    public CovidStatisticsCountry(List<CovidStatisticsCountry> covidCountriesStatistics, FragmentActivity activity) {
+    public CovidCountryStatistics(List<CovidCountryStatistics> covidCountriesStatistics, FragmentActivity activity) {
     }
 
     public String getmCovidCountry(){return mCovidCountry;}
@@ -43,22 +43,22 @@ public class CovidStatisticsCountry  implements Parcelable {
         dest.writeString(this.mFlags);
     }
 
-    protected CovidStatisticsCountry(Parcel in){
+    protected CovidCountryStatistics(Parcel in){
         this.mCovidCountry = in.readString();
         this.mTodayCases = in.readInt();
         this.mTotalCases = in.readString();
         this.mFlags = in.readString();
     }
 
-    public static final Creator<CovidStatisticsCountry> CREATOR = new Creator<CovidStatisticsCountry>() {
+    public static final Creator<CovidCountryStatistics> CREATOR = new Creator<CovidCountryStatistics>() {
         @Override
-        public CovidStatisticsCountry createFromParcel(Parcel source) {
-            return new CovidStatisticsCountry(source);
+        public CovidCountryStatistics createFromParcel(Parcel source) {
+            return new CovidCountryStatistics(source);
         }
 
         @Override
-        public CovidStatisticsCountry[] newArray(int size) {
-            return new CovidStatisticsCountry[size];
+        public CovidCountryStatistics[] newArray(int size) {
+            return new CovidCountryStatistics[size];
         }
     };
 

@@ -1,7 +1,5 @@
 package com.alstromergymnasiet.stoppacorona.ui.statistics;
 
-// Importerar funktioner:
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +21,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alstromergymnasiet.stoppacorona.CovidList;
 import com.alstromergymnasiet.stoppacorona.R;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -40,13 +37,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-// TO-DO grejer:
-
-// TODO Försöka implementera Python Covid API i denna Java class fil
-// TODO Komma på en lösning som gör att informationen om flagga, land, fall, ändring i procent och ändring i pilar visas när man kör appen.
-// TODO Jag kommenterar bort all kod som finns nere som liknar covidCoutry, jag tror att detta kan vara lösningen om jag skapar nya rader kod.
-
-public class StatisticsFragment extends Fragment {
+public class StatisticsFragment2 extends Fragment {
 
     ProgressBar progressBar;
     RecyclerView rvCovidStatistics;
@@ -58,10 +49,8 @@ public class StatisticsFragment extends Fragment {
     Drawable dpArrowUp, dpArrowDown, dpArrowSide;
     CovidStatisticsCountryAdapter covidStatisticsCountryAdapter;
 
-    private static final String TAG = StatisticsFragment.class.getSimpleName();
-    // List<CovidCountryStatistics> covidCountriesStatistics;
-    List<CovidList> covidCountriesStatistics;
-    String text = "";
+    private static final String TAG = StatisticsFragment2.class.getSimpleName();
+    List<CovidCountryStatistics> covidStatisticsCountries;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -82,45 +71,28 @@ public class StatisticsFragment extends Fragment {
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.line_divider));
         rvCovidStatistics.addItemDecoration(dividerItemDecoration);
 
-        // Lista länder
-        covidCountriesStatistics = new ArrayList<>();
-        covidCountriesStatistics.add(new CovidList("Country"));
-
-        // Visa listan
-        for(CovidList i : covidCountriesStatistics){
-            text = text + i.getCountry();
-        }
-
-        tvCovidInfoCountry.setText(text);
-
+        covidStatisticsCountries = new ArrayList<>();
+        
         getDataFromServerSortTotalCases();
-
+        
         return root;
     }
 
-    private class CustomComparator implements Comparator<CovidList>{
-
-        @Override
-        public int compare(CovidList o1, CovidList o2) {
-            return o1.getCountry().compareTo(o2.getCountry());
-        }
-    }
-
     private void showRecyclerView(){
-       // covidStatisticsCountryAdapter = new CovidStatisticsCountryAdapter(covidCountriesStatistics, getActivity());
+        covidStatisticsCountryAdapter = new CovidStatisticsCountryAdapter(covidStatisticsCountries, getActivity());
         rvCovidStatistics.setAdapter(covidStatisticsCountryAdapter);
 
         // ItemClickSupport.addTo(rvCovidStatistics).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-        // @Override
-        // public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-        //   showSelectedCountry(covidStatisticsCountries.get(position));
+           // @Override
+           // public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+             //   showSelectedCountry(covidStatisticsCountries.get(position));
         // }
         //});
     }
 
     // Raden nedan Kommer inte att behövas då det ändå bara kommer visas andra länder med statistik
     // TODO Ta bort raden nedanför
-    // private void showSelectedCountry(CovidStatisticsCountry covidStatisticsCountry) {
+   // private void showSelectedCountry(CovidStatisticsCountry covidStatisticsCountry) {
     //    Intent covidCovidCountryStatisticsDtail = new Intent(getActivity(), Covi)
     // }
 
@@ -140,25 +112,25 @@ public class StatisticsFragment extends Fragment {
 
                             JSONObject countryInfo = data.getJSONObject("countryInfo");
 
-                            // covidCountriesStatistics.add(new CovidCountryStatistics(data.getString("country"), data.getInt("cases"),
-                               //     data.getString("todayCases"), data.getString("deaths"),
-                                 //   data.getString("todayDeaths"), data.getString("recovered"),
-                                   // data.getString("active"), data.getString("critical"),
-                            //        countryInfo.getString("flag")
-                            // ));
+                            covidStatisticsCountries.add(new CovidCountryStatistics(data.getString("country"), data.getInt("cases"),
+                                    data.getString("todayCases"), data.getString("deaths"),
+                                    data.getString("todayDeaths"), data.getString("recovered"),
+                                    data.getString("active"), data.getString("critical"),
+                                    countryInfo.getString("flag")
+                            ));
                         }
 
-                       // Collections.sort(covidCountriesStatistics, new Comparator<CovidCountryStatistics>() {
+                        Collections.sort(covidStatisticsCountries, new Comparator<CovidCountryStatistics>() {
 
-                         //   @Override
-                           // public int compare(CovidCountryStatistics o1, CovidCountryStatistics o2) {
-                             //   if (o1.getmTodayCases()> o2.getmTodayCases()){
-                               //     return -1;
-                               // }else{
-                                 //   return 1;
-                               // }
-                           // }
-                        // });
+                            @Override
+                            public int compare(CovidCountryStatistics o1, CovidCountryStatistics o2) {
+                                if (o1.getmTodayCases()> o2.getmTodayCases()){
+                                    return -1;
+                                }else{
+                                    return 1;
+                                }
+                            }
+                        });
 
                         // Action Bar Title
                         getActivity().setTitle(jsonArray.length()+" countries");
@@ -197,12 +169,12 @@ public class StatisticsFragment extends Fragment {
                             // Extrahera JSONObject inom ett JSONObject
                             JSONObject countryInfo = data.getJSONObject("countryInfo");
 
-                            // covidCountriesStatistics.add(new CovidCountryStatistics(data.getString("country"), data.getInt("cases"),
-                               //     data.getString("todayCases"), data.getString("deaths"),
-                                 //   data.getString("todayDeaths"), data.getString("recovered"),
-                                  //  data.getString("active"), data.getString("critical"),
-                                    // countryInfo.getString("flag")
-                            // ));
+                            covidStatisticsCountries.add(new CovidCountryStatistics(data.getString("country"), data.getInt("cases"),
+                                    data.getString("todayCases"), data.getString("deaths"),
+                                    data.getString("todayDeaths"), data.getString("recovered"),
+                                    data.getString("active"), data.getString("critical"),
+                                    countryInfo.getString("flag")
+                            ));
                         }
 
                         getActivity().setTitle(jsonArray.length() + " countries");
@@ -256,13 +228,13 @@ public class StatisticsFragment extends Fragment {
         switch (item.getItemId()){
             case R.id.action_sort_alpha:
                 Toast.makeText(getContext(), "Sort Alphapetically", Toast.LENGTH_SHORT).show();
-                covidCountriesStatistics.clear();
+                covidStatisticsCountries.clear();
                 progressBar.setVisibility(View.VISIBLE);
                 getDataFromServerSortAlphabet();
                 return true;
             case R.id.action_sort_cases:
                 Toast.makeText(getContext(), "Sort by Total Cases", Toast.LENGTH_SHORT).show();
-                covidCountriesStatistics.clear();
+                covidStatisticsCountries.clear();
                 progressBar.setVisibility(View.VISIBLE);
                 getDataFromServerSortTotalCases();
                 return true;

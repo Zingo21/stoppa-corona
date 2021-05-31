@@ -185,6 +185,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayoutActive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/linearLayoutRecovered"
@@ -241,6 +242,22 @@
                 tools:text="3" />
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayoutActive"
+        android:layout_centerInParent="true"
+        android:id="@+id/linearLayoutButton">
+
+        <Button
+            android:id="@+id/buttonAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#554E4E"
+            android:text="Add to Statistics" />
 
     </LinearLayout>
 
