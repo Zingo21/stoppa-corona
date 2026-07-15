@@ -3,4 +3,14 @@
     <string name="title_home">Home</string>
     <string name="title_country">Country</string>
     <string name="title_statistics">Statistics</string>
+    <string name="title_compare">Compare</string>
+    <string name="compare_hint">Select countries to compare</string>
+    <string name="btn_add_country">Add Country</string>
+    <string name="btn_clear_all">Clear All</string>
+    <string name="btn_compare">Compare</string>
+    <string name="btn_save_comparison">Save Comparison</string>
+    <string name="no_countries_selected">No countries selected</string>
+    <string name="comparison_saved">Comparison saved!</string>
+    <string name="comparison_loaded">Comparison loaded!</string>
+    <string name="remove">Remove</string>
 </resources>
