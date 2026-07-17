@@ -14,6 +14,11 @@
     <item
         android:id="@+id/navigation_statistics"
         android:icon="@drawable/statistics_selector"
-        android:title="Statistics" />
+        android:title="@string/title_statistics" />
+
+    <item
+        android:id="@+id/navigation_compare"
+        android:icon="@drawable/compare_selector"
+        android:title="@string/title_compare" />
 
 </menu>
